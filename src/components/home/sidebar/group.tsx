@@ -5,13 +5,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-
 import { EllipsisVertical, UserRoundPlus } from "lucide-react";
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
@@ -31,10 +24,15 @@ function Group() {
       message: "latest message",
     },
   ]);
+
+  const handleCreateGroup = () => {
+    setCreateGroup(true);
+  };
+  const [createGroup, setCreateGroup] = useState(false);
   return (
     <div className="w-full px-1 space-y-2">
       <Sheet>
-        <SheetTrigger>
+        <SheetTrigger className="w-full">
           <button className="flex w-full gap-4 items-center px-3 text-muted-foreground  rounded-lg py-2">
             <UserRoundPlus size={20} className="text-muted-foreground" />
             Create a Group
@@ -46,16 +44,45 @@ function Group() {
           <div className="space-y-3 py-10">
             <Input
               placeholder="Name"
-              className="outline-none  focus-visible:ring-0"
+              className="outline-none  focus-visible:ring-0 py-1"
             />
             <div className="flex items-center w-full gap-2 ">
-              <Button className="w-full text-destructive" variant={"outline"}>
+              <Button
+                type="button"
+                className="w-full text-destructive"
+                variant={"outline"}
+                onClick={() => setCreateGroup(false)}
+              >
                 Cancel
               </Button>
-              <Button className="w-full " variant={"outline"}>
+              <Button
+                className="w-full "
+                variant={"outline"}
+                onClick={handleCreateGroup}
+              >
                 Create
               </Button>
             </div>
+          </div>
+          <div className={`w-full h-full ${createGroup ? "block" : "hidden"}`}>
+            {Array(5)
+              .fill(0)
+              .map((_, index) => (
+                <div
+                  key={index}
+                  className="flex  items-center gap-3 px-2 hover:bg-gray-100 py-2 rounded"
+                >
+                  <div className="">
+                    <div className="w-8 h-8 rounded-full bg-yellow-400 "></div>
+                  </div>
+                  <div className="w-full">
+                    <p className=" font-light">Harsh</p>
+                  </div>
+                  <Button className="" variant={"outline"}>
+                    Add
+                  </Button>
+                </div>
+              ))}
           </div>
         </SheetContent>
       </Sheet>
@@ -92,26 +119,3 @@ function Group() {
 }
 
 export default Group;
-
-/**
- *      
-   <Input
-              placeholder="Name"
-              className="outline-none  focus-visible:ring-0"
-            />
-            <div className="flex items-center w-full gap-2 ">
-              <Button className="w-full text-destructive" variant={"outline"}>
-                Cancel
-              </Button>
-              <Button className="w-full " variant={"outline"}>
-                Create
-              </Button>
-            </div>
-
-
-
-              <button className="flex w-full gap-4 items-center px-3 text-muted-foreground  rounded-lg py-2">
-              <UserRoundPlus size={20} className="text-muted-foreground" />
-              Create a Group
-            </button>
- */
