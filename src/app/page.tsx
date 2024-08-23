@@ -1,4 +1,3 @@
-
 export default function Home() {
-  return <main></main>;
+  return <main className="text-7xl">hello world</main>;
 }

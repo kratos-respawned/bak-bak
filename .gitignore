@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 /mongo-data
+bun.lockb
 /.pnp
 .pnp.js
 .yarn/install-state.gz
