@@ -1,26 +1,42 @@
 model Channel {
   id                    String         @id @default(cuid())
   name                  String
-  groupID               String         @unique
+  channelId             String         @unique
   description           String?
   image                 String?
+  ownerID               String
   createdAt             DateTime       @default(now())
+  updatedAt             DateTime       @updatedAt
+  owner                 User           @relation("channel-owner", fields: [ownerID], references: [id], onDelete: Cascade)
   receivedGroupMessages GroupMessage[] @relation("group-message-sent-to")
-  invitedUsers          Invites[]      @relation("invited-group-id")
-  admins                User[]         @relation("admins")
+  invitedUsers          Invites[]      @relation("invited-channel-id")
   members               User[]         @relation("members")
+  admins                Admins[]       @relation("admin-of-channel")
+}
+
+model Admins {
+  id        String   @id @default(cuid())
+  userId    String
+  channelId String
+  createdAt DateTime @default(now())
+  user      User     @relation("channel-admin", fields: [userId], references: [id], onDelete: Cascade)
+  channel   Channel  @relation("admin-of-channel", fields: [channelId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, channelId])
 }
 
 model Invites {
   id         String        @id @default(cuid())
   senderId   String
   receiverId String
-  groupID    String
+  channelId  String
   status     RequestStatus @default(pending)
   createdAt  DateTime      @default(now())
-  group      Channel       @relation("invited-group-id", fields: [groupID], references: [id], onDelete: Cascade)
-  receiver   User          @relation("group-invite-received-by", fields: [receiverId], references: [id], onDelete: Cascade)
-  sender     User          @relation("group-invite-sent-by", fields: [senderId], references: [id], onDelete: Cascade)
+  channel    Channel       @relation("invited-channel-id", fields: [channelId], references: [id], onDelete: Cascade)
+  receiver   User          @relation("channel-invite-received-by", fields: [receiverId], references: [id], onDelete: Cascade)
+  sender     User          @relation("channel-invite-sent-by", fields: [senderId], references: [id], onDelete: Cascade)
+
+  @@unique([senderId, receiverId, channelId])
 }
 
 enum RequestStatus {

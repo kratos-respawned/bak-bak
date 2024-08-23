@@ -13,11 +13,11 @@ model PersonalMessage {
 model GroupMessage {
   id        String   @id @default(cuid())
   senderId  String
-  groupID   String
+  channelId   String
   text      String
   createdAt DateTime @default(now())
   media     String?
   isSystem  Boolean  @default(false)
-  group     Channel  @relation("group-message-sent-to", fields: [groupID], references: [id], onDelete: Cascade)
+  group     Channel  @relation("group-message-sent-to", fields: [channelId], references: [id], onDelete: Cascade)
   sender    User     @relation("group-message-sent-by", fields: [senderId], references: [id], onDelete: Cascade)
 }

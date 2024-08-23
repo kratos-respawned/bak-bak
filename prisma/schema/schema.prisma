@@ -1,6 +1,6 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["driverAdapters", "prismaSchemaFolder"]
+  previewFeatures = ["driverAdapters", "prismaSchemaFolder","fullTextIndex","fullTextSearch"]
 }
 
 datasource db {
@@ -21,16 +21,18 @@ model User {
   receivedFriendRequests FriendRequest[]   @relation("request-received-by")
   sentFriendRequests     FriendRequest[]   @relation("request-sent-by")
   sentGroupMessages      GroupMessage[]    @relation("group-message-sent-by")
-  receivedGroupInvites   Invites[]         @relation("group-invite-received-by")
-  sentGroupInvites       Invites[]         @relation("group-invite-sent-by")
+  receivedGroupInvites   Invites[]         @relation("channel-invite-received-by")
+  sentGroupInvites       Invites[]         @relation("channel-invite-sent-by")
   receivedMessages       PersonalMessage[] @relation("message-received-by")
   sentMessages           PersonalMessage[] @relation("message-sent-by")
   sessions               Session[]
-  groupAdminIn           Channel[]         @relation("admins")
-  User_A                 User[]            @relation("friends")
-  User_B                 User[]            @relation("friends")
+  friendsWith            User[]            @relation("friends")
+  friendOf               User[]            @relation("friends")
   memberIn               Channel[]         @relation("members")
+  channelsOwned Channel[] @relation("channel-owner")
+  channelAdminIn Admins[] @relation("channel-admin")
 }
+
 
 model FriendRequest {
   id         String        @id @default(cuid())
@@ -40,4 +42,6 @@ model FriendRequest {
   createdAt  DateTime      @default(now())
   receiver   User          @relation("request-received-by", fields: [receiverId], references: [id], onDelete: Cascade)
   sender     User          @relation("request-sent-by", fields: [senderId], references: [id], onDelete: Cascade)
+
+  @@unique([senderId, receiverId])
 }
