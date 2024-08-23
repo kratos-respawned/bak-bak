@@ -1,3 +1,9 @@
+import HomeSideBar from "@/components/home/sidebar";
+
 export default function Home() {
-  return <main className="text-7xl">hello world</main>;
+  return (
+    <main className="">
+      <HomeSideBar />
+    </main>
+  );
 }
