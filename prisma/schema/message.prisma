@@ -1,0 +1,23 @@
+model PersonalMessage {
+  id         String   @id @default(cuid())
+  senderId   String
+  receiverId String
+  text       String
+  createdAt  DateTime @default(now())
+  media      String?
+  isSystem   Boolean  @default(false)
+  receiver   User     @relation("message-received-by", fields: [receiverId], references: [id], onDelete: Cascade)
+  sender     User     @relation("message-sent-by", fields: [senderId], references: [id], onDelete: Cascade)
+}
+
+model GroupMessage {
+  id        String   @id @default(cuid())
+  senderId  String
+  groupID   String
+  text      String
+  createdAt DateTime @default(now())
+  media     String?
+  isSystem  Boolean  @default(false)
+  group     Channel  @relation("group-message-sent-to", fields: [groupID], references: [id], onDelete: Cascade)
+  sender    User     @relation("group-message-sent-by", fields: [senderId], references: [id], onDelete: Cascade)
+}

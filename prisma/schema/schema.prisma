@@ -1,0 +1,43 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters", "prismaSchemaFolder"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                     String            @id @default(cuid())
+  name                   String?
+  email                  String            @unique
+  emailVerified          DateTime?
+  image                  String?
+  about                  String?
+  createdAt              DateTime          @default(now())
+  updatedAt              DateTime          @updatedAt
+  accounts               Account[]
+  receivedFriendRequests FriendRequest[]   @relation("request-received-by")
+  sentFriendRequests     FriendRequest[]   @relation("request-sent-by")
+  sentGroupMessages      GroupMessage[]    @relation("group-message-sent-by")
+  receivedGroupInvites   Invites[]         @relation("group-invite-received-by")
+  sentGroupInvites       Invites[]         @relation("group-invite-sent-by")
+  receivedMessages       PersonalMessage[] @relation("message-received-by")
+  sentMessages           PersonalMessage[] @relation("message-sent-by")
+  sessions               Session[]
+  groupAdminIn           Channel[]         @relation("admins")
+  User_A                 User[]            @relation("friends")
+  User_B                 User[]            @relation("friends")
+  memberIn               Channel[]         @relation("members")
+}
+
+model FriendRequest {
+  id         String        @id @default(cuid())
+  senderId   String
+  receiverId String
+  status     RequestStatus @default(pending)
+  createdAt  DateTime      @default(now())
+  receiver   User          @relation("request-received-by", fields: [receiverId], references: [id], onDelete: Cascade)
+  sender     User          @relation("request-sent-by", fields: [senderId], references: [id], onDelete: Cascade)
+}

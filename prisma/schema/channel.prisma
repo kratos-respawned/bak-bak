@@ -1,0 +1,30 @@
+model Channel {
+  id                    String         @id @default(cuid())
+  name                  String
+  groupID               String         @unique
+  description           String?
+  image                 String?
+  createdAt             DateTime       @default(now())
+  receivedGroupMessages GroupMessage[] @relation("group-message-sent-to")
+  invitedUsers          Invites[]      @relation("invited-group-id")
+  admins                User[]         @relation("admins")
+  members               User[]         @relation("members")
+}
+
+model Invites {
+  id         String        @id @default(cuid())
+  senderId   String
+  receiverId String
+  groupID    String
+  status     RequestStatus @default(pending)
+  createdAt  DateTime      @default(now())
+  group      Channel       @relation("invited-group-id", fields: [groupID], references: [id], onDelete: Cascade)
+  receiver   User          @relation("group-invite-received-by", fields: [receiverId], references: [id], onDelete: Cascade)
+  sender     User          @relation("group-invite-sent-by", fields: [senderId], references: [id], onDelete: Cascade)
+}
+
+enum RequestStatus {
+  pending
+  accepted
+  declined
+}
