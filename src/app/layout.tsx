@@ -24,8 +24,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={cn(geistSans.variable, geistMono.variable)}>
-        <div className="bg-gray-50 p-2">{children}</div>
+      <body className={cn("font-sans", geistSans.variable, geistMono.variable)}>
+        <div className="bg-gray-100 p-2 h-screen overflow-hidden ">
+          {children}
+        </div>
       </body>
     </html>
   );
