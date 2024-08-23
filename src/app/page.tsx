@@ -8,8 +8,7 @@ export default function Home() {
     <main className="">
       <HomeChat />
       <ChatBox />
-      <ChatSend/>
+      <ChatSend />
     </main>
   );
-  return <main className=""></main>;
 }
