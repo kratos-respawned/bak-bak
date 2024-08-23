@@ -1,11 +1,11 @@
 services:
-  mongodb:
-    image: mongo:latest
-    container_name: mongodb
-    ports:
-      - "27017:27017"
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: kratos
+      POSTGRES_PASSWORD: kratos
     volumes:
-      - mongo-data:/data/db
-
-volumes:
-  mongo-data:
+      - mongo-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
