@@ -11,4 +11,5 @@ export default function Home() {
       <ChatSend/>
     </main>
   );
+  return <main className=""></main>;
 }
