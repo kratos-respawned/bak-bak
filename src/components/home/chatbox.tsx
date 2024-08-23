@@ -1,6 +1,16 @@
+"use client";
 import React from "react";
-import { Dot } from "lucide-react";
+import { Dot, CornerUpLeft, CornerUpRight, Copy, Trash2 } from "lucide-react";
 import { ScrollArea } from "../ui/scroll-area";
+import { EllipsisVertical } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 
 function ChatBox() {
   return (
@@ -21,9 +31,48 @@ function ChatBox() {
                   08:34
                 </p>
               </div>
-              <div className="bg-white p-3 border rounded-xl max-w-[30rem] ml-4 text-muted-foreground text-sm font-light ">
-                Bhula dena mujhe ae alvida tujhe tujhe jeena hai mere bina,
-                safar ye hai tera ye rasta tera tujhe jeena hai mere bina 💔
+              <div className="flex items-center gap-3">
+                <div
+                  id="message"
+                  className="bg-white p-3 border rounded-xl max-w-[30rem] ml-4 text-muted-foreground text-sm font-light "
+                >
+                  Bhula dena mujhe ae alvida tujhe tujhe jeena hai mere bina,
+                  safar ye hai tera ye rasta tera tujhe jeena hai mere bina 💔
+                </div>
+
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <EllipsisVertical size={16} />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuItem className="gap-2">
+                      <CornerUpLeft size={14} />
+                      Reply
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      className="gap-2"
+                      onClick={() => {
+                        const message =
+                          document.getElementById("message")?.innerText;
+                        if (message) {
+                          navigator.clipboard.writeText(message);
+                        }
+                      }}
+                    >
+                      <Copy size={14} />
+                      Copy
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem className="gap-2">
+                      <CornerUpRight size={14} />
+                      Forward
+                    </DropdownMenuItem>
+                    <DropdownMenuItem  className="gap-2 focus:bg-destructive/80 focus:text-white">
+                      <Trash2 size={14} />
+                      Delete
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
             </div>
           </div>
