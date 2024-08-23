@@ -1,13 +1,12 @@
 "use server";
-
 import { prisma } from "@/lib/prisma";
 import { authedProcedure } from "@/lib/procedures";
 import {
-    channelIdSchema,
-    channelInvitationRequestSchema,
-    channelUserSchema,
-    createChannelSchema,
-    updateChannelSchema,
+  channelIdSchema,
+  channelInvitationRequestSchema,
+  channelUserSchema,
+  createChannelSchema,
+  updateChannelSchema,
 } from "@/validators/channel-schema";
 export const GetChannelsAction = authedProcedure
   .input(channelIdSchema)
@@ -24,7 +23,7 @@ export const GetChannelsAction = authedProcedure
         image: true,
       },
     });
-    return channels;
+    return { success: true, channels };
   });
 export const GetChannelAction = authedProcedure
   .input(channelIdSchema)
@@ -32,7 +31,7 @@ export const GetChannelAction = authedProcedure
     const channel = await prisma.channel.findUnique({
       where: { id: input.channelId },
     });
-    return channel;
+    return { success: true, channel };
   });
 export const CreateChannelAction = authedProcedure
   .input(createChannelSchema)
@@ -70,7 +69,7 @@ export const CreateChannelAction = authedProcedure
         },
       },
     });
-    return channel;
+    return { success: true, channel, message: "Channel created" };
   });
 
 export const DeleteChannelAction = authedProcedure
@@ -89,6 +88,7 @@ export const DeleteChannelAction = authedProcedure
     await prisma.channel.delete({
       where: { id: channelId },
     });
+    return { success: true, message: "Channel deleted" };
   });
 
 export const UpdateChannelAction = authedProcedure
@@ -256,6 +256,7 @@ export const RemoveChannelMemberAction = authedProcedure
         },
       },
     });
+    return { success: true, message: "Member removed" };
   });
 
 export const HandleChannelInviteAction = authedProcedure

@@ -1,23 +1,23 @@
 import { z } from "zod";
 
 export const channelIdSchema = z.object({
-  channelId: z.string(),
+  channelId: z.string().cuid(),
 });
 export const channelUserSchema = channelIdSchema.extend({
-  userId: z.string(),
+  userId: z.string().cuid(),
 });
 export const channelInvitationRequestSchema = channelIdSchema.extend({
   accept: z.boolean(),
 });
 export const createChannelSchema = z.object({
-  name: z.string(),
-  description: z.string(),
-  channelId: z.string(),
+  name: z.string().max(50),
+  description: z.string().max(50),
+  channelId: z.string().cuid(),
   members: z.array(z.string()).optional(),
 });
 export const updateChannelSchema = createChannelSchema.extend({
-  channelId: z.string(),
-  media: z.string().optional(),
+  channelId: z.string().cuid(),
+  media: z.string().url().optional(),
 });
 export type channelIdSchema = z.infer<typeof channelIdSchema>;
 export type channelUserSchema = z.infer<typeof channelUserSchema>;

@@ -1,6 +1,6 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["driverAdapters", "prismaSchemaFolder","fullTextIndex","fullTextSearch"]
+  previewFeatures = ["driverAdapters", "prismaSchemaFolder", "fullTextIndex", "fullTextSearch"]
 }
 
 datasource db {
@@ -29,10 +29,9 @@ model User {
   friendsWith            User[]            @relation("friends")
   friendOf               User[]            @relation("friends")
   memberIn               Channel[]         @relation("members")
-  channelsOwned Channel[] @relation("channel-owner")
-  channelAdminIn Admins[] @relation("channel-admin")
+  channelsOwned          Channel[]         @relation("channel-owner")
+  channelAdminIn         Admins[]          @relation("channel-admin")
 }
-
 
 model FriendRequest {
   id         String        @id @default(cuid())
