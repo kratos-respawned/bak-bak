@@ -1,7 +1,7 @@
-import { MapPinned, MessageCircle, Pin, PinIcon, PinOff } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
-import { ReactNode } from "react";
-import { ScrollArea } from "../ui/scroll-area";
+import { MessageCircle, Pin } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/tabs";
+import { ScrollArea } from "../../ui/scroll-area";
+import Group from "./group";
 
 function TypeGroup() {
   return (
@@ -22,18 +22,18 @@ function TypeGroup() {
           className="w-full "
           style={{ height: "calc(100vh - 200px)" }}
         >
-          <div className="w-full rounded space-y-4 bg-white px-4 py-3">
+          <div className="w-full rounded space-y-4 bg-white px-1 py-3">
             <div className="w-full space-y-2">
               <p className="flex text-sm text-muted-foreground justify-between items-center">
                 Pinned messages. <Pin size={15} />
               </p>
-              <div className="space-y-2">
+              <div className="">
                 {Array(4)
                   .fill(0)
                   .map((_, index) => (
                     <div
                       key={index}
-                      className="flex justify-start items-center gap-3"
+                      className="flex justify-start items-center gap-3 px-2 hover:bg-gray-100 py-2 rounded"
                     >
                       <div className="w-8 h-8 rounded-full bg-red-700"></div>
                       <div className="">
@@ -50,13 +50,13 @@ function TypeGroup() {
               <p className="flex text-sm text-muted-foreground justify-between items-center">
                 Messages. <MessageCircle size={15} />
               </p>
-              <div className="space-y-2">
+              <div className="w-full">
                 {Array(20)
                   .fill(0)
                   .map((_, index) => (
                     <div
                       key={index}
-                      className="flex justify-start items-center gap-3"
+                      className="flex justify-start items-center gap-3 py-2 w-full px-2 rounded hover:bg-gray-100"
                     >
                       <div className="w-8 h-8 rounded-full bg-red-700"></div>
                       <div className="">
@@ -70,6 +70,11 @@ function TypeGroup() {
               </div>
             </div>
           </div>
+        </ScrollArea>
+      </TabsContent>
+      <TabsContent value="Groups">
+        <ScrollArea className="w-full h-[calc(100vh - 200px)]">
+          <Group />
         </ScrollArea>
       </TabsContent>
     </Tabs>

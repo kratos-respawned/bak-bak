@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import HomeSideBar from "@/components/home/sidebar";
+import HomeSideBar from "@/components/home/sidebar/sidebar";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -26,11 +26,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={cn(geistSans.variable, geistMono.variable, "font-sans")}>
-        <div className="flex gap-4 bg-[#f9f8fc] px-3">
-          <div className="w-full h-screen py-2 flex-none max-w-xs">
+        <div className="flex gap-3 bg-[#f9f8fc] px-3">
+          <div className="w-full h-screen py-3 flex-none max-w-xs">
             <HomeSideBar />
           </div>
-          <div className="flex-grow py-2  w-full">{children}</div>
+          <div className="flex-grow py-3  w-full">{children}</div>
         </div>
       </body>
     </html>

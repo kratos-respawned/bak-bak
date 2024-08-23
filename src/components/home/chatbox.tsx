@@ -14,7 +14,7 @@ import {
 
 function ChatBox() {
   return (
-    <ScrollArea className=" border-r-2 border-l-2 border-b-2 p-4  h-[calc(100vh-195px)]">
+    <ScrollArea className=" border-r-2 border-l-2 border-b-2 p-4  h-[calc(100vh-202px)]">
       <p className="text-center text-sm text-gray-500">Today</p>
       {Array(20)
         .fill(0)
@@ -67,7 +67,7 @@ function ChatBox() {
                       <CornerUpRight size={14} />
                       Forward
                     </DropdownMenuItem>
-                    <DropdownMenuItem  className="gap-2 focus:bg-destructive/80 focus:text-white">
+                    <DropdownMenuItem className="gap-2 focus:bg-destructive/80 focus:text-white">
                       <Trash2 size={14} />
                       Delete
                     </DropdownMenuItem>
